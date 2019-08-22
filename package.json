@@ -1,6 +1,6 @@
 {
   "name": "i18next-localforage-backend",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "caching layer backend for i18next using localforage as storage layer",
   "main": "index.js",
   "module": "./dist/esm/i18nextLocalStorageBackend.js",
@@ -16,7 +16,9 @@
   "scripts": {
     "lint": "eslint ./src/*",
     "build": "rimraf dist && rollup -c && tsc -p ./tsconfig.json",
-    "postbuild": "cpy \"./dist/umd/*.js\" ./"
+    "postbuild": "cpy \"./dist/umd/*.js\" ./",
+    "preversion": "yarn lint && yarn build",
+    "postversion": "git push --follow-tags"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
