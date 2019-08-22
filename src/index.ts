@@ -47,16 +47,13 @@ class Cache {
     this.options = { ...getDefaults(), ...this.options, ...options };
 
     this.storage = localforage.createInstance(this.options);
-    console.log(this.storage);
     window.i18forage = this.storage;
   }
 
   read(language: string, namespace: string, callback: ReadCallback): void {
-    console.log('START READ');
     const nowMS = new Date().getTime();
 
     this.storage.getItem(`${language}-${namespace}`).then((local: any) => {
-      console.log('READ OK, calling cb');
       if (
         local
         && local.i18nStamp
@@ -72,7 +69,6 @@ class Cache {
   }
 
   save(language: string, namespace: string, data: any): Promise<void> {
-    console.log('START SAVE');
     data.i18nStamp = new Date().getTime();
 
     // language version (if set)
@@ -81,9 +77,7 @@ class Cache {
     }
 
     // save
-    return this.storage.setItem(`${language}-${namespace}`, data).then(() => {
-      console.log('SAVE DONE');
-    });
+    return this.storage.setItem(`${language}-${namespace}`, data);
   }
 }
 
