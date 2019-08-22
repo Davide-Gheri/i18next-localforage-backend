@@ -1,5 +1,5 @@
 {
-  "name": "@davidegheri/i18next-localforage-backend",
+  "name": "i18next-localforage-backend",
   "version": "1.0.0",
   "description": "caching layer backend for i18next using localforage as storage layer",
   "main": "index.js",

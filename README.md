@@ -4,13 +4,13 @@ This is a i18next cache layer to be used in the browser using [localforage](http
 
 # Getting started
 
-Source can be loaded via [npm](https://www.npmjs.com/package/@davidegheri/i18next-localforage-cache)or [downloaded](https://github.com/i18next/i18next-localStorage-cache/blob/master/i18nextLocalStorageCache.min.js) from this repo.
+Source can be loaded via [npm](https://www.npmjs.com/package/i18next-localforage-backend) or [downloaded](https://github.com/i18next/i18next-localforage-backend/blob/master/i18nextLocalforageBackend.min.js) from this repo.
 
 - If you don't use a module loader it will be added to window.i18nextLocalForageBackend
 
 ```
 # npm package
-$ npm install @davidegheri/i18next-localforage-backend
+$ npm install i18next-localforage-backend
 ```
 
 Wiring up with the chained backend:
@@ -18,7 +18,7 @@ Wiring up with the chained backend:
 ```js
 import i18next from 'i18next';
 import Backend from 'i18next-chained-backend';
-import LocalforageBackend from '@davidegheri/i18next-localforage-backend'; // primary use cache
+import LocalforageBackend from 'i18next-localforage-backend'; // primary use cache
 import XHR from 'i18next-xhr-backend'; // fallback xhr load
 
 i18next
