@@ -20,6 +20,9 @@
     "preversion": "yarn lint && yarn build",
     "postversion": "git push --follow-tags"
   },
+  "peerDependencies": {
+    "localforage": "^1.*"
+  },
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -36,15 +39,14 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.1.1",
-    "typescript": "^3.5.3"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.5.5",
+    "rollup-plugin-commonjs": "^10.0.2",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint": "^6.2.1",
     "eslint-config-airbnb": "^18.0.1",
-    "localforage": "^1.7.3",
-    "rollup-plugin-commonjs": "^10.0.2"
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.5.5"
   }
 }

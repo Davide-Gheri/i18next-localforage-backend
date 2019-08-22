@@ -21,13 +21,17 @@ const nodeResolveOptions = {
 
 const input = './src/index.ts';
 const name = 'i18nextLocalforageBackend';
-const external = id => !id.startsWith('.') && !id.startsWith('/') && !id.includes(':');
+const externalDynamic = id => !id.startsWith('.') && !id.startsWith('/') && !id.includes(':');
+const externalStatic = ['localforage'];
+const globals = {
+    localforage: 'localforage',
+};
 
 export default [
     {
         input,
         output: { format: 'cjs', file: pkg.main },
-        external,
+        external: externalDynamic,
         plugins: [
             babel(getBabelOptions({ useESModules: false })),
         ],
@@ -35,14 +39,20 @@ export default [
     {
         input,
         output: { format: 'esm', file: pkg.module },
-        external,
+        external: externalDynamic,
         plugins: [
             babel(getBabelOptions({ useESModules: true })),
         ],
     },
     {
         input,
-        output: { format: 'umd', name, file: `dist/umd/${name}.js` },
+        output: {
+            format: 'umd',
+            file: `dist/umd/${name}.js`,
+            name,
+            globals,
+        },
+        external: externalStatic,
         plugins: [
             babel(getBabelOptions({ useESModules: true })),
             nodeResolve(nodeResolveOptions),
@@ -51,7 +61,13 @@ export default [
     },
     {
         input,
-        output: { format: 'umd', name, file: `dist/umd/${name}.min.js` },
+        output: {
+            format: 'umd',
+            file: `dist/umd/${name}.min.js`,
+            name,
+            globals,
+        },
+        external: externalStatic,
         plugins: [
             babel(getBabelOptions({ useESModules: true })),
             nodeResolve(nodeResolveOptions),

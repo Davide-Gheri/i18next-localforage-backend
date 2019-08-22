@@ -1,4 +1,7 @@
+/* eslint-disable */
+// @ts-ignore
 import localforage from 'localforage';
+/* eslint-enable */
 
 interface CacheOptions {
   name?: string;
@@ -10,7 +13,7 @@ interface CacheOptions {
   versions?: Record<string, number>;
   driver?: string | string[];
 }
-
+declare const window: any;
 type ReadCallback = (err: any, data: any) => void;
 
 function getDefaults(): CacheOptions {
@@ -33,7 +36,7 @@ class Cache {
 
   public options!: Required<CacheOptions>;
 
-  public storage: any = localforage;
+  public storage: any;
 
   constructor(services: any, options: CacheOptions = {}) {
     this.init(services, options);
@@ -43,30 +46,33 @@ class Cache {
     this.services = services;
     this.options = { ...getDefaults(), ...this.options, ...options };
 
-    this.storage.config(this.options);
+    this.storage = localforage.createInstance(this.options);
+    console.log(this.storage);
+    window.i18forage = this.storage;
   }
 
-  async read(language: string, namespace: string, callback: ReadCallback): Promise<void> {
+  read(language: string, namespace: string, callback: ReadCallback): void {
+    console.log('START READ');
     const nowMS = new Date().getTime();
 
-    const localName = await this.storage.getItem(`${language}-${namespace}`);
-
-    if (localName) {
-      const local = JSON.parse(localName);
+    this.storage.getItem(`${language}-${namespace}`).then((local: any) => {
+      console.log('READ OK, calling cb');
       if (
-        local.i18nStamp && local.i18nStamp + this.options.expirationTime > nowMS
+        local
+        && local.i18nStamp
+        && local.i18nStamp + this.options.expirationTime > nowMS
         && this.options.versions[language] === local.i18nVersion
       ) {
         delete local.i18nVersion;
         delete local.i18nStamp;
         return callback(null, local);
       }
-    }
-
-    return callback(null, null);
+      return callback(null, null);
+    });
   }
 
-  async save(language: string, namespace: string, data: any): Promise<void> {
+  save(language: string, namespace: string, data: any): Promise<void> {
+    console.log('START SAVE');
     data.i18nStamp = new Date().getTime();
 
     // language version (if set)
@@ -75,7 +81,9 @@ class Cache {
     }
 
     // save
-    await this.storage.setItem(`${language}-${namespace}`, JSON.stringify(data));
+    return this.storage.setItem(`${language}-${namespace}`, data).then(() => {
+      console.log('SAVE DONE');
+    });
   }
 }
 
