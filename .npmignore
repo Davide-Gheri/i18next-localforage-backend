@@ -5,3 +5,4 @@ src/
 .gitignore
 rollup.config.js
 yarn.lock
+.idea/
