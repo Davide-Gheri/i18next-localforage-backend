@@ -1,6 +1,6 @@
 {
   "name": "i18next-localforage-backend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "caching layer backend for i18next using localforage as storage layer",
   "main": "index.js",
   "module": "./dist/esm/i18nextLocalStorageBackend.js",
